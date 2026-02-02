@@ -1,5 +1,8 @@
 package br.com.relojoaria.dto.request;
 
+import br.com.relojoaria.enums.UserRole;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
