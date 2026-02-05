@@ -44,4 +44,5 @@ public class Product {
             fetch = FetchType.LAZY
     )
     private List<MaterialUsage> items;
+
 }

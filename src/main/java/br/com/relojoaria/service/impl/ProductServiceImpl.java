@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -37,12 +36,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto update(String productName, ProductDto productDto) {
+    public ProductDto update(String productName, ProductDto productRequestDto) {
         Product product = productRepository.findByName(productName)
                 .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
-        product.setName(productDto.getName());
-        product.setUnit(productDto.getUnit());
-        product.setPrice(productDto.getPrice());
+        product.setName(productRequestDto.getName());
+        product.setUnit(productRequestDto.getUnit());
+        product.setPrice(productRequestDto.getPrice());
 
         productRepository.save(product);
         return productAdapter.toDto(product);

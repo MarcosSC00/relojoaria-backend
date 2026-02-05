@@ -53,11 +53,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientResponse update(Long id, ClientRequest dto) {
-        if(!clientRepository.existsById(id)){
-            throw new IllegalArgumentException("cliente não encontrado");
-        }
-        Client client = clientRepository.save(clientAdapter.toEntity(dto));
-        return clientAdapter.toResponseDTO(client);
+        Client client = clientRepository.findById(id).orElseThrow(() ->
+                new NotFoundException("cliente não encontrado"));
+        client.setName(dto.getName());
+        client.setPhone(dto.getPhone());
+
+        return clientAdapter.toResponseDTO(clientRepository.save(client));
     }
 
     @Override

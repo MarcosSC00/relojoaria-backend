@@ -14,5 +14,4 @@ public interface ProductAdapter {
     ProductDto toDto(Product product);
 
     Product toEntity(ProductDto productDto);
-
 }

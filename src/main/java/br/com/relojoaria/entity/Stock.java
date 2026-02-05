@@ -28,4 +28,7 @@ public class Stock {
 
     @Column(name = "min_qtd",   precision = 10, scale = 3)
     private BigDecimal minQuantity;
+
+    @Column(name = "qtd_used")
+    private BigDecimal qtdUsed;
 }
