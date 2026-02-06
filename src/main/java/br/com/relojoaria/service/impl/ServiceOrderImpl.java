@@ -174,6 +174,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
     private void updateStockQuantity(Stock stock, BigDecimal qtdUsed) {
         BigDecimal newQuantity = stock.getCurrentQuantity().subtract(qtdUsed);
         stock.setCurrentQuantity(newQuantity);
+        stock.setQtdUsed(stock.getQtdUsed().add(qtdUsed));
         stockRepository.save(stock);
     }
 

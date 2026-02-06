@@ -11,6 +11,7 @@ public interface ProductAdapter {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "unit", source = "unit")
     @Mapping(target = "price", source = "price")
+    @Mapping(target = "id", source = "id")
     ProductDto toDto(Product product);
 
     Product toEntity(ProductDto productDto);

@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 
 @Data
 public class ProductDto {
+    private Long id;
+    
     @NotBlank(message = "Product name is required")
     @Size(max = 100, min = 3, message = "invalid product name")
     private String name;

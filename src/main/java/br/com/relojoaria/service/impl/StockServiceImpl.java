@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,9 +48,9 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public StockResponse updateStock(String productName, BigDecimal quantity) {
-        Stock stock = stockRepository.findByProductName(productName).orElseThrow(
-                () -> new NotFoundException("nenhum estoque do produto: "+productName+" foi encontrado")
+    public StockResponse updateStock(Long id, BigDecimal quantity) {
+        Stock stock = stockRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("nenhum estoque encontrado")
         );
         BigDecimal currentQuantity = stock.getCurrentQuantity();
         if(quantity.compareTo(BigDecimal.ZERO) < 0 && currentQuantity.compareTo(quantity.abs()) > 0) {
@@ -83,7 +84,7 @@ public class StockServiceImpl implements StockService {
         List<StockResponse> stocks = stockRepository.findAll().stream()
                 .map(stockAdapter::toResponse).collect(Collectors.toList());
         if (stocks.isEmpty()) {
-            throw new NotFoundException("Nenhum estoque encontrado");
+            return new ArrayList<>();
         }
         return stocks;
     }

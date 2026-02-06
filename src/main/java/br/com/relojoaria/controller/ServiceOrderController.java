@@ -38,23 +38,27 @@ public class ServiceOrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ServiceOrderResponse> update(@PathVariable Long id, @RequestBody @Valid ServiceOrderUpdate dto) {
+    public ResponseEntity<ServiceOrderResponse> update(@PathVariable Long id,
+                                                       @RequestBody @Valid ServiceOrderUpdate dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
     @PostMapping("/{serviceOrderId}/add-subservice")
-    public ResponseEntity<SubServiceResponse> addSubService(@PathVariable("serviceOrderId") Long serviceOrderId, @RequestBody @Valid SubServiceRequest dto) {
+    public ResponseEntity<SubServiceResponse> addSubService(@PathVariable("serviceOrderId") Long serviceOrderId,
+                                                            @RequestBody @Valid SubServiceRequest dto) {
         return ResponseEntity.ok(service.addSubServiceOrder(serviceOrderId, dto));
     }
 
     @PostMapping("{serviceOrderId}/remove-subservice/{subServiceId}")
-    public ResponseEntity<Void> removeSubService(@PathVariable("serviceOrderId") Long serviceOrderId, @PathVariable("subServiceId") Long subServiceId) {
+    public ResponseEntity<Void> removeSubService(@PathVariable("serviceOrderId") Long serviceOrderId,
+                                                 @PathVariable("subServiceId") Long subServiceId) {
         service.removeSubServiceOrder(serviceOrderId, subServiceId);
         return  ResponseEntity.noContent().build();
     }
 
     @GetMapping("{serviceOrderId}/sub-services")
-    public ResponseEntity<List<SubServiceResponse>> getSubServices(@PathVariable("serviceOrderId") Long serviceOrderId) {
+    public ResponseEntity<List<SubServiceResponse>> getSubServices(@PathVariable("serviceOrderId")
+                                                                       Long serviceOrderId) {
         return ResponseEntity.ok(service.getSubServiceOrders(serviceOrderId));
     }
 

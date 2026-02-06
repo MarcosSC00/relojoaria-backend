@@ -14,6 +14,7 @@ public class StockResponse {
     private BigDecimal price;
     private BigDecimal currentQuantity;
     private String unit;
+    private BigDecimal qtdUsed;
 
     @PrePersist
     public void prePersist() {

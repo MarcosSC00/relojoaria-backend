@@ -18,7 +18,6 @@ import java.util.List;
 @RequestMapping("/api/clients")
 @Validated
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
 public class ClientController {
 
     private final ClientService clientService;

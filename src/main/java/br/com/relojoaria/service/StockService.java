@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StockService {
     StockResponse create(StockRequest dto);
-    StockResponse updateStock(String productName, BigDecimal quantity);
+    StockResponse updateStock(Long id, BigDecimal quantity);
     void delete(Long id);
     StockResponse getById(Long id);
     List<StockResponse> getAll();

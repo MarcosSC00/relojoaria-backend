@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/stock")
 @Validated
 @RequiredArgsConstructor
+@RequestMapping("/api/stock")
 public class StockController {
 
     private final StockService stockService;
@@ -31,10 +31,10 @@ public class StockController {
         return ResponseEntity.ok(stockService.getById(id));
     }
 
-    @PostMapping("/{productName}/{quantity}")
-    public ResponseEntity<StockResponse> update(@PathVariable("productName") String productName,
-                                                @PathVariable("quantity") BigDecimal quantity){
-        return ResponseEntity.ok(stockService.updateStock(productName, quantity));
+    @PostMapping("/{id}")
+    public ResponseEntity<StockResponse> update(@PathVariable("id") Long id,
+                                                @RequestBody BigDecimal quantity){
+        return ResponseEntity.ok(stockService.updateStock(id, quantity));
     }
 
     @GetMapping
