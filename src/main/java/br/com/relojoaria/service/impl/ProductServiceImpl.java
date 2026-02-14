@@ -2,6 +2,7 @@ package br.com.relojoaria.service.impl;
 
 import br.com.relojoaria.adapter.ProductAdapter;
 import br.com.relojoaria.dto.ProductDto;
+import br.com.relojoaria.dto.response.ProductAnalysis;
 import br.com.relojoaria.entity.Product;
 import br.com.relojoaria.error.exception.NotFoundException;
 import br.com.relojoaria.error.exception.UnprocessableException;
@@ -76,5 +77,14 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findByName(productName)
                 .orElseThrow(() -> new NotFoundException("Produto não encontrado"));
         productRepository.delete(product);
+    }
+
+    @Override
+    public ProductAnalysis getProductAnalysis(String productName) {
+        ProductAnalysis productAnalysis =  productRepository.getProductAnalysisByName(productName);
+        if(productAnalysis == null) {
+            throw new NotFoundException("Dados não encontrados");
+        }
+        return productAnalysis;
     }
 }

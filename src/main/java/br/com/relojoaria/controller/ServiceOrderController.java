@@ -3,6 +3,7 @@ package br.com.relojoaria.controller;
 import br.com.relojoaria.dto.request.ServiceOrderRequest;
 import br.com.relojoaria.dto.request.ServiceOrderUpdate;
 import br.com.relojoaria.dto.request.SubServiceRequest;
+import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
 import br.com.relojoaria.service.ServiceOrderService;
@@ -66,5 +67,12 @@ public class ServiceOrderController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/custom/{productName}")
+    public ResponseEntity<List<ServiceOrderCustom>> getServiceOrderCustoms(@PathVariable("productName")
+                                                                               String productName) {
+        service.getServiceOrderCustoms(productName);
+        return ResponseEntity.ok(service.getServiceOrderCustoms(productName));
     }
 }

@@ -41,6 +41,8 @@ public class StockServiceImpl implements StockService {
         Stock stock = Stock.builder()
                 .product(product)
                 .currentQuantity(dto.getQuantity())
+                .qtdUsed(BigDecimal.ZERO)
+                .minQuantity(BigDecimal.ZERO)
                 .build();
 
         stockRepository.save(stock);

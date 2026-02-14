@@ -28,7 +28,7 @@ public class Product {
     @Column(nullable = false)
     private UnitType unit;
 
-    @Column(precision = 10, scale = 3, nullable = false)
+    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal price;
 
     @OneToOne(

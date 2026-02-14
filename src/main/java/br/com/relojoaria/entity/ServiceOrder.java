@@ -54,10 +54,10 @@ public class ServiceOrder {
     @JsonIgnore
     private List<SubService> subServices;
 
-    @Column(name = "add_value", precision = 10, scale = 3)
+    @Column(name = "add_value", precision = 10, scale = 2)
     private BigDecimal addValue = BigDecimal.ZERO;
 
-    @Column(name = "total_price", precision = 10, scale = 3, nullable = false)
+    @Column(name = "total_price", precision = 10, scale = 2, nullable = false)
     private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "serviceOrder")
@@ -73,5 +73,4 @@ public class ServiceOrder {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
 }

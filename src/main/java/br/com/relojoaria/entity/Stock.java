@@ -23,10 +23,10 @@ public class Stock {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "current_qtd",  precision = 10, scale = 3)
+    @Column(name = "current_qtd",  precision = 10, scale = 2)
     private BigDecimal currentQuantity;
 
-    @Column(name = "min_qtd",   precision = 10, scale = 3)
+    @Column(name = "min_qtd",   precision = 10, scale = 2)
     private BigDecimal minQuantity;
 
     @Column(name = "qtd_used")

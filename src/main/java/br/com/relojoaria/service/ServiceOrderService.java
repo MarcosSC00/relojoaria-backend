@@ -3,6 +3,7 @@ package br.com.relojoaria.service;
 import br.com.relojoaria.dto.request.ServiceOrderRequest;
 import br.com.relojoaria.dto.request.ServiceOrderUpdate;
 import br.com.relojoaria.dto.request.SubServiceRequest;
+import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
 
@@ -17,4 +18,6 @@ public interface ServiceOrderService {
     SubServiceResponse addSubServiceOrder(Long serviceOrderId, SubServiceRequest dto);
     void removeSubServiceOrder(Long serviceOrderId, Long subServiceId);
     List<SubServiceResponse> getSubServiceOrders(Long serviceOrderId);
+    List<ServiceOrderCustom> getServiceOrderCustoms(String productName);
+
 }

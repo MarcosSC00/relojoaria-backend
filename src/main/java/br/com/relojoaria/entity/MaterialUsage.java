@@ -24,8 +24,6 @@ public class MaterialUsage {
     @JoinColumn(name = "service_order_id")
     private ServiceOrder serviceOrder;
 
-    // pesquisar sobre optional
-    // pesquisar sobre o fetch
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product", nullable = false)
     private Product product;
@@ -34,10 +32,9 @@ public class MaterialUsage {
     @JoinColumn(name = "subservice_id")
     private SubService subService;
 
-    // renomear coluna
-    @Column(name="qtd_used", precision = 10, scale = 3)
+    @Column(name="qtd_used", precision = 10, scale = 2)
     private BigDecimal quantityUsed;
 
-    @Column(name = "sub_total",  precision = 10, scale = 3)
+    @Column(name = "sub_total",  precision = 10, scale = 2)
     private BigDecimal subTotal;
 }

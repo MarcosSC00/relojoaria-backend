@@ -1,6 +1,7 @@
 package br.com.relojoaria.controller;
 
 import br.com.relojoaria.dto.ProductDto;
+import br.com.relojoaria.dto.response.ProductAnalysis;
 import br.com.relojoaria.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,5 +50,11 @@ public class ProductController {
     public ResponseEntity<Void> delete(@PathVariable("productName") String productName) {
         productService.delete(productName);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/analysis/{productName}")
+    public ResponseEntity<ProductAnalysis> getProductAnalysis(@PathVariable("productName") String productName) {
+        productService.getProductAnalysis(productName);
+        return ResponseEntity.ok(productService.getProductAnalysis(productName));
     }
 }

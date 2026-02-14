@@ -93,15 +93,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request) {
-        ErrorResponse body = ErrorResponse.builder()
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .error("Internal server error")
-                .message("Ocorreu um erro inesperado, já estamos trabalhando para resolvê-lo.")
-                .timestamp(Instant.now().toString())
-                .path(request.getRequestURI())
-                .build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<ErrorResponse> handleException(HttpServletRequest request) {
+//        ErrorResponse body = ErrorResponse.builder()
+//                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+//                .error("Internal server error")
+//                .message("Ocorreu um erro inesperado, já estamos trabalhando para resolvê-lo.")
+//                .timestamp(Instant.now().toString())
+//                .path(request.getRequestURI())
+//                .build();
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+//    }
 }

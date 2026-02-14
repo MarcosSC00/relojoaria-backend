@@ -1,6 +1,8 @@
 package br.com.relojoaria.service;
 
 import br.com.relojoaria.dto.ProductDto;
+import br.com.relojoaria.dto.response.ProductAnalysis;
+
 import java.util.List;
 
 public interface ProductService {
@@ -10,5 +12,5 @@ public interface ProductService {
     ProductDto getById(Long productId);
     List<ProductDto> getAll();
     void delete(String productName);
-
+    ProductAnalysis  getProductAnalysis(String productName);
 }

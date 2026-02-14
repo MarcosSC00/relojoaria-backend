@@ -6,6 +6,7 @@ import br.com.relojoaria.dto.request.MaterialUsageRequest;
 import br.com.relojoaria.dto.request.ServiceOrderRequest;
 import br.com.relojoaria.dto.request.ServiceOrderUpdate;
 import br.com.relojoaria.dto.request.SubServiceRequest;
+import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
 import br.com.relojoaria.entity.*;
@@ -133,6 +134,15 @@ public class ServiceOrderImpl implements ServiceOrderService {
             throw new NotFoundException("Nenhum sub-serviço encontrado");
         }
         return  subServices.stream().map(subServiceAdapter::toResponse).toList();
+    }
+
+    @Override
+    public List<ServiceOrderCustom> getServiceOrderCustoms(String productName) {
+        List<ServiceOrderCustom> servicesCustom = serviceOrderRepository.getServiceOrderCustom(productName);
+        if (servicesCustom.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return servicesCustom;
     }
 
     private void processStockItems(ServiceOrder serviceOrder, List<MaterialUsageRequest> stockItems) {
