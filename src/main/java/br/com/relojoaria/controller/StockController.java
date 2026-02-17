@@ -31,10 +31,9 @@ public class StockController {
         return ResponseEntity.ok(stockService.getById(id));
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<StockResponse> update(@PathVariable("id") Long id,
-                                                @RequestBody BigDecimal quantity){
-        return ResponseEntity.ok(stockService.updateStock(id, quantity));
+    @PostMapping("/update")
+    public ResponseEntity<StockResponse> update(@RequestBody @Valid StockRequest stock) {
+        return ResponseEntity.ok(stockService.updateStock(stock));
     }
 
     @GetMapping

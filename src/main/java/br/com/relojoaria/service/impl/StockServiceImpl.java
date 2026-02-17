@@ -50,16 +50,15 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public StockResponse updateStock(Long id, BigDecimal quantity) {
-        Stock stock = stockRepository.findById(id).orElseThrow(
+    public StockResponse updateStock(StockRequest dto) {
+        Stock stock = stockRepository.findByProductName(dto.getProductName()).orElseThrow(
                 () -> new NotFoundException("nenhum estoque encontrado")
         );
         BigDecimal currentQuantity = stock.getCurrentQuantity();
-        if(quantity.compareTo(BigDecimal.ZERO) < 0 && currentQuantity.compareTo(quantity.abs()) > 0) {
-            stock.setCurrentQuantity(stock.getCurrentQuantity().subtract(quantity));
+        if(dto.getQuantity().compareTo(BigDecimal.ZERO) < 0 && currentQuantity.compareTo(dto.getQuantity().abs()) > 0) {
+            stock.setCurrentQuantity(stock.getCurrentQuantity().subtract(dto.getQuantity()));
         }else
-            stock.setCurrentQuantity(stock.getCurrentQuantity().add(quantity));
-
+            stock.setCurrentQuantity(stock.getCurrentQuantity().add(dto.getQuantity()));
         // Relacionar inserir os campos e relações das novas entidades
         stockRepository.save(stock);
         return stockAdapter.toResponse(stock);
