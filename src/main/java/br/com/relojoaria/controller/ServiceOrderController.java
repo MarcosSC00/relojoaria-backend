@@ -3,9 +3,11 @@ package br.com.relojoaria.controller;
 import br.com.relojoaria.dto.request.ServiceOrderRequest;
 import br.com.relojoaria.dto.request.ServiceOrderUpdate;
 import br.com.relojoaria.dto.request.SubServiceRequest;
+import br.com.relojoaria.dto.request.UpdateStatus;
 import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
+import br.com.relojoaria.enums.ServiceStatus;
 import br.com.relojoaria.service.ServiceOrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +66,7 @@ public class ServiceOrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -74,5 +76,11 @@ public class ServiceOrderController {
                                                                                String productName) {
         service.getServiceOrderCustoms(productName);
         return ResponseEntity.ok(service.getServiceOrderCustoms(productName));
+    }
+
+    @PutMapping("/{id}/update-status")
+    public ResponseEntity<Void> updateStatus(@PathVariable("id") Long id, @RequestBody UpdateStatus status) {
+        service.updateStatus(id, status.getStatus());
+        return ResponseEntity.noContent().build();
     }
 }

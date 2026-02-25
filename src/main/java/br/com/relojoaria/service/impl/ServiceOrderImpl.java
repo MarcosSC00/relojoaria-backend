@@ -2,14 +2,12 @@ package br.com.relojoaria.service.impl;
 
 import br.com.relojoaria.adapter.ServiceOrderAdapter;
 import br.com.relojoaria.adapter.SubServiceAdapter;
-import br.com.relojoaria.dto.request.MaterialUsageRequest;
-import br.com.relojoaria.dto.request.ServiceOrderRequest;
-import br.com.relojoaria.dto.request.ServiceOrderUpdate;
-import br.com.relojoaria.dto.request.SubServiceRequest;
+import br.com.relojoaria.dto.request.*;
 import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
 import br.com.relojoaria.entity.*;
+import br.com.relojoaria.enums.ServiceStatus;
 import br.com.relojoaria.error.exception.NotFoundException;
 import br.com.relojoaria.repository.ClientRepository;
 import br.com.relojoaria.repository.ServiceOrderRepository;
@@ -147,6 +145,14 @@ public class ServiceOrderImpl implements ServiceOrderService {
             return new ArrayList<>();
         }
         return servicesCustom;
+    }
+
+    @Override
+    public void updateStatus(Long id, ServiceStatus status) {
+        ServiceOrder serviceOrder = serviceOrderRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Serviço com id:"+id+" não encontrado"));
+        serviceOrder.setStatus(status != null ?  status : serviceOrder.getStatus());
+        serviceOrderRepository.save(serviceOrder);
     }
 
     private void processStockItems(ServiceOrder serviceOrder, List<MaterialUsageRequest> stockItems) {
