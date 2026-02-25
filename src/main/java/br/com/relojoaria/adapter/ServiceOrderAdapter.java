@@ -15,7 +15,6 @@ import java.util.Objects;
 @Mapper(componentModel = "spring", uses = {MaterialUsageAdapter.class, SubServiceAdapter.class})
 public interface ServiceOrderAdapter {
 
-    @Mapping(target = "clientId", source = "client.id")
     @Mapping(target = "clientName", source = "client.name")
     @Mapping(target = "addValue", source = "addValue")
     @Mapping(target = "subServicesPrice", expression = "java(calculateSubServicesPrice(entity))")
@@ -25,7 +24,7 @@ public interface ServiceOrderAdapter {
     @Mapping(target = "client", expression = "java(client)")
     ServiceOrder toEntity(ServiceOrderRequest dto, @Context Client client);
 
-    @Mapping(target = "clientId", source="client.id")
+    @Mapping(target = "clientName", source="client.name")
     ServiceOrderRequest toRequest(ServiceOrder entity);
 
     default BigDecimal calculateSubServicesPrice(ServiceOrder entity) {

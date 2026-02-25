@@ -35,6 +35,12 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             """, nativeQuery = true)
     List<ClientCustomDto> findAllOrderedById();
 
+    Optional<Client> findByName(String name);
+
     @Query("SELECT so FROM ServiceOrder so where so.client.id = :id")
     List<ServiceOrder> findServiceOrdersById(@Param("id") Long id);
+
+    @Query(value = """
+            select c.name from client c""", nativeQuery = true)
+    List<String> getAllClientNames();
 }

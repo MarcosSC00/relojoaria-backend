@@ -79,4 +79,13 @@ public class ClientServiceImpl implements ClientService {
                 .orElseThrow(() -> new NotFoundException("Client com id: "+id+" não encontrado"));
         clientRepository.delete(client);
     }
+
+    @Override
+    public List<String> getAllClientNames() {
+        List<String> clientNames = clientRepository.getAllClientNames();
+        if (clientNames == null || clientNames.isEmpty()) {
+            return List.of();
+        }
+        return clientNames;
+    }
 }

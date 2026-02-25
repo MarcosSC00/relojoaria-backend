@@ -22,4 +22,5 @@ public class ServiceOrderResponse {
     private BigDecimal totalPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime endDate;
 }

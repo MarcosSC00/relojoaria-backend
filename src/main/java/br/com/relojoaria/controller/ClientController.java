@@ -52,4 +52,9 @@ public class ClientController {
     public ResponseEntity<List<ServiceOrderResponse>> getTasks(@PathVariable("clientId") Long clientId) {
         return ResponseEntity.ok(clientService.getTasks(clientId));
     }
+
+    @GetMapping("/get-all-names")
+    public ResponseEntity<List<String>> getAllNames() {
+        return ResponseEntity.ok(clientService.getAllClientNames());
+    }
 }

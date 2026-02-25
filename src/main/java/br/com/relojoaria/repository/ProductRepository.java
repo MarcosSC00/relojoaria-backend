@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -19,10 +20,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 p.unit as product_unit,
                 max(s.current_qtd) as current_qtd,
                 max(p.price) as price,
-                sum(s.qtd_used) as qtd_used,
-                sum(p.price * s.qtd_used) as total_value
+                max(s.qtd_used) as qtd_used,
+                max(p.price * s.qtd_used) as total_value
                 from product p
                 inner join stock s on s.product_id=p.id where p.name=:productName
                 group by p.id, p.name, p.unit""", nativeQuery = true)
     ProductAnalysis getProductAnalysisByName(@Param("productName") String productName);
+
+    @Query(value = """
+            select p.name from product p""", nativeQuery = true)
+    List<String> getJustNameProducts();
 }

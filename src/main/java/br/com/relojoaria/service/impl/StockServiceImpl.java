@@ -89,4 +89,13 @@ public class StockServiceImpl implements StockService {
         }
         return stocks;
     }
+
+    @Override
+    public void updateQtdUsed(Long serviceId, BigDecimal qtdUsed) {
+        Stock stock = stockRepository.findById(serviceId).orElseThrow(() ->
+                new NotFoundException("stock não encontrado."));
+
+        stock.setQtdUsed(stock.getQtdUsed().subtract(qtdUsed));
+        stockRepository.save(stock);
+    }
 }

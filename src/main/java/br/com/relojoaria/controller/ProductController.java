@@ -57,4 +57,9 @@ public class ProductController {
         productService.getProductAnalysis(productName);
         return ResponseEntity.ok(productService.getProductAnalysis(productName));
     }
+
+    @GetMapping("/get-just-name")
+    public ResponseEntity<List<String>> getJustNameProducts() {
+        return ResponseEntity.ok(productService.getJustNameProducts());
+    }
 }

@@ -37,7 +37,6 @@ public class SubServiceImpl implements SubServiceService {
                 .serviceOrder(serviceOrder)
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .status(request.getStatus())
                 .price(request.getPrice())
                 .build();
 
@@ -45,18 +44,9 @@ public class SubServiceImpl implements SubServiceService {
     }
 
     private SubServiceResponse priceCalculator(SubServiceRequest request, ServiceOrder serviceOrder, SubService sub) {
-        //processStockItems(sub, request.getItems());
-
-//        BigDecimal SubServicesPrice = sub.getItems().stream()
-//                .map(MaterialUsage::getSubTotal)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//        sub.setPrice(SubServicesPrice);
-
         serviceOrder.getSubServices().add(sub);
-
         serviceOrder.setTotalPrice(serviceOrder.getTotalPrice().add(sub.getPrice()));
         serviceOrderRepository.save(serviceOrder);
-
         return  adapter.toResponse(sub);
     }
 
@@ -86,28 +76,6 @@ public class SubServiceImpl implements SubServiceService {
         serviceOrder.setTotalPrice(serviceOrder.getTotalPrice().subtract(sub.getPrice()));
         serviceOrderRepository.save(serviceOrder);
     }
-
-//    private void processStockItems(SubService subService, List<MaterialUsageRequest> stockItems) {
-//        for (MaterialUsageRequest itemRequest : stockItems) {
-//            Stock stock = stockRepository.findByProductName(itemRequest.getProductName())
-//                    .orElseThrow(() -> new NotFoundException(
-//                            "Stock não possui o item: " + itemRequest.getProductName()));
-//
-//            validateStockQuantity(stock, itemRequest.getQuantityUsed());
-//
-//            BigDecimal subTotal = stock.getProduct().getPrice().multiply(itemRequest.getQuantityUsed());
-//
-//            MaterialUsage materialUsage = MaterialUsage.builder()
-//                    .subService(subService)
-//                    .product(stock.getProduct())
-//                    .quantityUsed(itemRequest.getQuantityUsed())
-//                    .subTotal(subTotal)
-//                    .build();
-//
-//            subService.getItems().add(materialUsage);
-//            updateStockQuantity(stock, itemRequest.getQuantityUsed());
-//        }
-//    }
 
     private void validateStockQuantity(Stock stock, BigDecimal quantityUsed) {
         if (stock.getCurrentQuantity().compareTo(quantityUsed) < 0) {

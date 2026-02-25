@@ -13,4 +13,5 @@ public interface ProductService {
     List<ProductDto> getAll();
     void delete(String productName);
     ProductAnalysis  getProductAnalysis(String productName);
+    List<String> getJustNameProducts();
 }

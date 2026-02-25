@@ -16,8 +16,8 @@ import java.util.List;
 
 @Data
 public class ServiceOrderRequest {
-    @NotNull(message = "Requester ID is required")
-    private Long clientId;
+    @NotNull(message = "Client name is required")
+    private String clientName;
 
     @NotBlank(message = "Title is required")
     @Size(max = 200, message = "Title must be at most 200 characters")
@@ -40,8 +40,5 @@ public class ServiceOrderRequest {
     @NotNull(message = "End Date is required")
     private LocalDateTime endDate;
 
-    @Valid
-    @NotNull(groups = {MaterialUsageRequest.class}, message = "items are required")
     private List<MaterialUsageRequest> items;
-
 }

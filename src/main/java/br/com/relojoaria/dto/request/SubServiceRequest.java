@@ -1,12 +1,9 @@
 package br.com.relojoaria.dto.request;
 
-import br.com.relojoaria.enums.ServiceStatus;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 public class SubServiceRequest {
@@ -17,15 +14,8 @@ public class SubServiceRequest {
     @Size(min = 3, max = 200, message = "invalid description")
     private String description;
 
-    @NotNull(groups =  {ServiceStatus.class})
-    private ServiceStatus status;
-
     @NotNull(message = "price is required")
     @Digits(integer = 8, fraction = 2, message = "The value must have a maximum of three decimal places")
     @DecimalMin(value = "1.00", message = "the value must be greater than 1.00")
     private BigDecimal price;
-
-//    @Valid
-//    @NotNull(groups =  {MaterialUsageRequest.class}, message = "items are required")
-//    private List<MaterialUsageRequest> items;
 }

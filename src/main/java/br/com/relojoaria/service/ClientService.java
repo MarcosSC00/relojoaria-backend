@@ -20,4 +20,6 @@ public interface ClientService {
 
     void delete(Long id);
 
+    List<String> getAllClientNames();
+
 }

@@ -30,10 +30,6 @@ public class SubService {
     @Column(length = 200)
     private String description;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ServiceStatus status;
-
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

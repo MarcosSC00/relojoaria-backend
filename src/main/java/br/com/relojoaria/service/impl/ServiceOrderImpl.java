@@ -16,6 +16,7 @@ import br.com.relojoaria.repository.ServiceOrderRepository;
 import br.com.relojoaria.repository.StockRepository;
 import br.com.relojoaria.repository.SubServiceRepository;
 import br.com.relojoaria.service.ServiceOrderService;
+import br.com.relojoaria.service.StockService;
 import br.com.relojoaria.service.SubServiceService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
     private final SubServiceService subServiceOrderService;
     private final SubServiceRepository subRepository;
     private final SubServiceAdapter subServiceAdapter;
+    private final StockService stockService;
 
 
     @Override
@@ -57,8 +59,8 @@ public class ServiceOrderImpl implements ServiceOrderService {
     @Override
     public ServiceOrderResponse create(ServiceOrderRequest request) {
         // Validar cliente
-        Client client = clientRepository.findById(request.getClientId())
-                .orElseThrow(() -> new NotFoundException("Requester com ID: " + request.getClientId()+" não encontrado"));
+        Client client = clientRepository.findByName(request.getClientName())
+                .orElseThrow(() -> new NotFoundException("Cliente não encontrado"));
 
         // Criar oredem de serviço base
         ServiceOrder serviceOrder = ServiceOrder.builder()
@@ -112,6 +114,8 @@ public class ServiceOrderImpl implements ServiceOrderService {
     public void delete(Long id) {
         ServiceOrder serviceOrder = serviceOrderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("task com id:"+id+" não encontrada"));
+        serviceOrder.getItems().forEach((m) ->
+                stockService.updateQtdUsed(m.getProduct().getStock().getId(), m.getQuantityUsed()));
         serviceOrderRepository.delete(serviceOrder);
     }
 
@@ -149,6 +153,9 @@ public class ServiceOrderImpl implements ServiceOrderService {
 
         if (stockItems == null || stockItems.isEmpty()) return;
         for (MaterialUsageRequest itemRequest : stockItems) {
+            if(itemRequest.getProductName().isBlank() || itemRequest.getQuantityUsed() == null){
+                break;
+            }
             // Buscar stock pelo nome do item
             Stock stock = stockRepository.findByProductName(itemRequest.getProductName())
                     .orElseThrow(() -> new NotFoundException(

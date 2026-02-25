@@ -12,4 +12,5 @@ public interface StockService {
     void delete(Long id);
     StockResponse getById(Long id);
     List<StockResponse> getAll();
+    void updateQtdUsed(Long serviceId, BigDecimal qtdUsed);
 }

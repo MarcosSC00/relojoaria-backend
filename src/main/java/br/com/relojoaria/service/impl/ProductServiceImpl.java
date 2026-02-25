@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -86,5 +87,14 @@ public class ProductServiceImpl implements ProductService {
             throw new NotFoundException("Dados não encontrados");
         }
         return productAnalysis;
+    }
+
+    @Override
+    public List<String> getJustNameProducts() {
+        List<String> result = productRepository.getJustNameProducts();
+        if(result.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return result;
     }
 }
