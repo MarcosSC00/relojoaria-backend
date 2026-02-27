@@ -41,4 +41,6 @@ public class ServiceOrderRequest {
     private LocalDateTime endDate;
 
     private List<MaterialUsageRequest> items;
+
+    private List<SubServiceRequest> subServices;
 }

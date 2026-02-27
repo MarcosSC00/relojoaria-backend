@@ -19,6 +19,7 @@ public class ServiceOrderResponse {
     private BigDecimal subServicesPrice;
     private ServiceType type;
     private List<MaterialUsageResponse> items;
+    private List<SubServiceResponse> subServices;
     private BigDecimal totalPrice;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

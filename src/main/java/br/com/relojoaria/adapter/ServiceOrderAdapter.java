@@ -20,7 +20,7 @@ public interface ServiceOrderAdapter {
     @Mapping(target = "subServicesPrice", expression = "java(calculateSubServicesPrice(entity))")
     ServiceOrderResponse toResponseDTO(ServiceOrder entity);
 
-    @Mapping(target = "id", ignore = true) // id normalmente é gerado pelo banco
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "client", expression = "java(client)")
     ServiceOrder toEntity(ServiceOrderRequest dto, @Context Client client);
 

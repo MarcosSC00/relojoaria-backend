@@ -68,12 +68,25 @@ public class ServiceOrderImpl implements ServiceOrderService {
                 .status(request.getStatus())
                 .type(request.getType())
                 .addValue(request.getAddValue() != null ? request.getAddValue() : BigDecimal.ZERO)
+                .items(new ArrayList<>())
                 .endDate(request.getEndDate())
                 .totalPrice(BigDecimal.ZERO)
                 .subServices(new ArrayList<>())
-                .items(new ArrayList<>())
                 .build();
 
+        //Criacao do subservico diretamente
+        if(request.getSubServices() != null && !request.getSubServices().isEmpty()) {
+            for(SubServiceRequest subRequest : request.getSubServices()) {
+                SubService subService = SubService.builder()
+                        .serviceOrder(serviceOrder)
+                        .title(subRequest.getTitle())
+                        .description(subRequest.getDescription())
+                        .price(subRequest.getPrice())
+                        .build();
+
+                serviceOrder.getSubServices().add(subService);
+            }
+        }
         // Processar itens do estoque
         processStockItems(serviceOrder, request.getItems());
 
