@@ -29,7 +29,6 @@ public class ServiceOrder {
     @Column(length = 200)
     private String description;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ServiceStatus status;
 

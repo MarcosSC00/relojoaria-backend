@@ -42,7 +42,7 @@ public class ServiceOrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ServiceOrderResponse> update(@PathVariable Long id,
-                                                       @RequestBody @Valid ServiceOrderUpdate dto) {
+                                                       @RequestBody @Valid ServiceOrderRequest dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 

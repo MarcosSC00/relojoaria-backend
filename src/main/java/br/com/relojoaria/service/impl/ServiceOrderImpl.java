@@ -1,5 +1,6 @@
 package br.com.relojoaria.service.impl;
 
+import br.com.relojoaria.adapter.MaterialUsageAdapter;
 import br.com.relojoaria.adapter.ServiceOrderAdapter;
 import br.com.relojoaria.adapter.SubServiceAdapter;
 import br.com.relojoaria.dto.request.*;
@@ -38,6 +39,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
     private final SubServiceRepository subRepository;
     private final SubServiceAdapter subServiceAdapter;
     private final StockService stockService;
+    private final MaterialUsageAdapter  materialUsageAdapter;
 
 
     @Override
@@ -99,19 +101,36 @@ public class ServiceOrderImpl implements ServiceOrderService {
     }
 
     @Override
-    public ServiceOrderResponse update(Long serviceOrderId, ServiceOrderUpdate dto) {
+    public ServiceOrderResponse update(Long serviceOrderId, ServiceOrderRequest dto) {
         ServiceOrder serviceOrder = serviceOrderRepository.findById(serviceOrderId)
                 .orElseThrow(() -> new NotFoundException("Serviço com id:"+serviceOrderId+" não encontrado"));
-        Client client = clientRepository
-                .findById(dto.getRequesterId() != null ? dto.getRequesterId() : serviceOrder.getClient().getId())
-                .orElseThrow(() -> new NotFoundException(" requester não encontrado"));
 
-        serviceOrder.setClient(client);
+        if(dto.getClientName() != null){
+            Client client = clientRepository
+                    .findByName(dto.getClientName())
+                    .orElseThrow(() -> new NotFoundException(" requester não encontrado"));
+            serviceOrder.setClient(client);
+        }
+
         serviceOrder.setTitle(dto.getTitle() != null ? dto.getTitle() : serviceOrder.getTitle());
         serviceOrder.setDescription(dto.getDescription() != null ? dto.getDescription() : serviceOrder.getDescription());
+        serviceOrder.setType(dto.getType() != null ? dto.getType() : serviceOrder.getType());
         serviceOrder.setStatus(dto.getStatus() != null ? dto.getStatus() : serviceOrder.getStatus());
         serviceOrder.setEndDate(dto.getEndDate() != null ? dto.getEndDate() : serviceOrder.getEndDate());
         serviceOrder.setAddValue(dto.getAddValue() != null ? dto.getAddValue() : serviceOrder.getAddValue());
+        if (dto.getItems() != null) {
+            serviceOrder.getItems().clear();
+            List<MaterialUsage> items =
+                    materialUsageAdapter.toEntityList(dto.getItems());
+            items.forEach(item -> item.setServiceOrder(serviceOrder));
+            serviceOrder.getItems().addAll(items);
+        }
+        if (dto.getSubServices() != null) {
+            serviceOrder.getSubServices().clear();
+            List<SubService> subservices = subServiceAdapter
+                    .toEntityList(dto.getSubServices(), serviceOrder);
+            serviceOrder.getSubServices().addAll(subservices);
+        }
 
         //novo valor total
         calculateTotalPrice(serviceOrder);
