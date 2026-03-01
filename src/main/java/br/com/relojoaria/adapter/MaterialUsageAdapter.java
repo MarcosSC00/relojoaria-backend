@@ -21,6 +21,7 @@ public abstract class MaterialUsageAdapter {
 
     @Mapping(target = "productName", source = "product.name")
     @Mapping(target = "productPrice", source = "product.price")
+    @Mapping(target = "unit", source = "product.unit")
     public abstract MaterialUsageResponse toResponse(MaterialUsage entity);
 
     @Mapping(target = "productName", source = "product.name")

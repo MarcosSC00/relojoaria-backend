@@ -1,7 +1,6 @@
 package br.com.relojoaria.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,10 +26,6 @@ public class MaterialUsage {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product", nullable = false)
     private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subservice_id")
-    private SubService subService;
 
     @Column(name="qtd_used", precision = 10, scale = 2)
     private BigDecimal quantityUsed;
