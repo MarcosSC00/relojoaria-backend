@@ -1,6 +1,7 @@
 package br.com.relojoaria.repository;
 
 import br.com.relojoaria.dto.ClientCustomDto;
+import br.com.relojoaria.dto.response.ClientWhitServicesResponse;
 import br.com.relojoaria.entity.Client;
 import br.com.relojoaria.entity.ServiceOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -43,4 +44,17 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query(value = """
             select c.name from client c""", nativeQuery = true)
     List<String> getAllClientNames();
+
+    @Query("""
+            select c.id,
+            c.name,
+            c.phone,
+            c.created_at,
+            so.title,
+            so.status,
+            so.type,
+            so.total_price
+            from client c inner join
+            service_order so on c.id=so.client_id;""")
+    List<ClientWhitServicesResponse> findClientWithServices();
 }
