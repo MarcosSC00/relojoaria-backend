@@ -3,7 +3,7 @@ package br.com.relojoaria.service;
 import br.com.relojoaria.dto.ClientCustomDto;
 import br.com.relojoaria.dto.request.ClientRequest;
 import br.com.relojoaria.dto.response.ClientResponse;
-import br.com.relojoaria.dto.response.ClientWhitServicesResponse;
+import br.com.relojoaria.dto.response.ClientWithServicesResponse;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 
 import java.util.List;
@@ -23,5 +23,5 @@ public interface ClientService {
 
     List<String> getAllClientNames();
 
-    List<ClientWhitServicesResponse> getClientWhitServices();
+    ClientWithServicesResponse getClientWithServices(Long clientId);
 }

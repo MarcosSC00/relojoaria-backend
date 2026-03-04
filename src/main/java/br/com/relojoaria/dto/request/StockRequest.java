@@ -13,7 +13,6 @@ public class StockRequest {
     private String productName;
 
     @NotNull(message = "quantity is required")
-    @Digits(integer = 8, fraction = 2, message = "The value must have a maximum of three decimal places")
-    @DecimalMin(value = "0.01", message = "the value must be greater than 0.00")
+    @Digits(integer = 10, fraction = 2, message = "The value must have a maximum of three decimal places")
     private BigDecimal quantity;
 }

@@ -54,12 +54,11 @@ public class StockServiceImpl implements StockService {
         Stock stock = stockRepository.findByProductName(dto.getProductName()).orElseThrow(
                 () -> new NotFoundException("nenhum estoque encontrado")
         );
-        BigDecimal currentQuantity = stock.getCurrentQuantity();
-        if(dto.getQuantity().compareTo(BigDecimal.ZERO) < 0 && currentQuantity.compareTo(dto.getQuantity().abs()) > 0) {
-            stock.setCurrentQuantity(stock.getCurrentQuantity().subtract(dto.getQuantity()));
-        }else
-            stock.setCurrentQuantity(stock.getCurrentQuantity().add(dto.getQuantity()));
-        // Relacionar inserir os campos e relações das novas entidades
+        BigDecimal newQuantity = stock.getCurrentQuantity().add(dto.getQuantity());
+        if(newQuantity.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Estoque insuficiente.");
+        }
+        stock.setCurrentQuantity(stock.getCurrentQuantity().add(dto.getQuantity()));
         stockRepository.save(stock);
         return stockAdapter.toResponse(stock);
     }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,7 +38,7 @@ public class Client {
             fetch = FetchType.LAZY
     )
     @JsonIgnore
-    private List<ServiceOrder> serviceOrders;
+    private List<ServiceOrder> serviceOrders =  new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

@@ -5,7 +5,7 @@ import br.com.relojoaria.adapter.ServiceOrderAdapter;
 import br.com.relojoaria.dto.ClientCustomDto;
 import br.com.relojoaria.dto.request.ClientRequest;
 import br.com.relojoaria.dto.response.ClientResponse;
-import br.com.relojoaria.dto.response.ClientWhitServicesResponse;
+import br.com.relojoaria.dto.response.ClientWithServicesResponse;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.entity.Client;
 import br.com.relojoaria.entity.ServiceOrder;
@@ -91,7 +91,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientWhitServicesResponse> getClientWhitServices() {
-        return List.of();
+    public ClientWithServicesResponse getClientWithServices(Long clientId) {
+         Client client = clientRepository.findClientWithServices(clientId)
+                 .orElseThrow(() -> new NotFoundException("Cliente não encontrado."));
+        return clientAdapter.toResponse(client);
     }
 }
