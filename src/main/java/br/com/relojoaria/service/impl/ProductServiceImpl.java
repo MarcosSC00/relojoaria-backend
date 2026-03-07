@@ -3,6 +3,7 @@ package br.com.relojoaria.service.impl;
 import br.com.relojoaria.adapter.ProductAdapter;
 import br.com.relojoaria.dto.ProductDto;
 import br.com.relojoaria.dto.response.ProductAnalysis;
+import br.com.relojoaria.dto.response.ProductDataChart;
 import br.com.relojoaria.entity.Product;
 import br.com.relojoaria.error.exception.NotFoundException;
 import br.com.relojoaria.error.exception.UnprocessableException;
@@ -92,6 +93,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<String> getJustNameProducts() {
         List<String> result = productRepository.getJustNameProducts();
+        if(result.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return result;
+    }
+
+    @Override
+    public List<ProductDataChart> getProductDataChart() {
+        List<ProductDataChart> result = productRepository.getProductDataChart();
         if(result.isEmpty()) {
             return new ArrayList<>();
         }

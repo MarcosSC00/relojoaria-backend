@@ -51,7 +51,7 @@ public class ServiceOrder {
 
     @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<SubService> subServices;
+    private List<SubService> subServices = new ArrayList<>();
 
     @Column(name = "add_value", precision = 10, scale = 2)
     private BigDecimal addValue = BigDecimal.ZERO;

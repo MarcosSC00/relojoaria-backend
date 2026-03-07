@@ -235,11 +235,15 @@ public class ServiceOrderImpl implements ServiceOrderService {
 
     private void calculateTotalPrice(ServiceOrder serviceOrder) {
         BigDecimal serviceOrderValue = serviceOrder.getItems().stream()
-                .map(MaterialUsage::getSubTotal)
+                .map(item -> item.getSubTotal() != null ? item.getSubTotal() : BigDecimal.ZERO)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal subServiceOrderValue = serviceOrder.getSubServices().stream()
-                .map(SubService::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal subServiceOrderValue = BigDecimal.ZERO;
+
+        if(serviceOrder.getSubServices() != null && !serviceOrder.getSubServices().isEmpty()) {
+            subServiceOrderValue = serviceOrder.getSubServices().stream()
+                    .map(sub -> sub.getPrice() != null ? sub.getPrice() : BigDecimal.ZERO)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
 
         BigDecimal materialsPrice = serviceOrderValue.add(subServiceOrderValue);
 

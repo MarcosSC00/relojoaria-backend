@@ -2,6 +2,7 @@ package br.com.relojoaria.controller;
 
 import br.com.relojoaria.dto.ProductDto;
 import br.com.relojoaria.dto.response.ProductAnalysis;
+import br.com.relojoaria.dto.response.ProductDataChart;
 import br.com.relojoaria.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +62,10 @@ public class ProductController {
     @GetMapping("/get-just-name")
     public ResponseEntity<List<String>> getJustNameProducts() {
         return ResponseEntity.ok(productService.getJustNameProducts());
+    }
+
+    @GetMapping("/get-data-chart")
+    public ResponseEntity<List<ProductDataChart>> getProductDataChart() {
+        return ResponseEntity.ok(productService.getProductDataChart());
     }
 }
