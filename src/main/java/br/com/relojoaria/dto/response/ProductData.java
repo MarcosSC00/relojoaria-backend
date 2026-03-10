@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-public class ProductDataChart {
+public class ProductData {
     private String name;
     private BigDecimal quantity;
+    private BigDecimal current_qtd;
 }

@@ -1,7 +1,7 @@
 package br.com.relojoaria.repository;
 
 import br.com.relojoaria.dto.response.ProductAnalysis;
-import br.com.relojoaria.dto.response.ProductDataChart;
+import br.com.relojoaria.dto.response.ProductData;
 import br.com.relojoaria.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<String> getJustNameProducts();
 
     @Query(value = """
-            select p.name, s.qtd_used from product p inner join stock s
+            select p.name, s.qtd_used,s.current_qtd from product p inner join stock s
             on p.id=s.product_id""", nativeQuery = true)
-    List<ProductDataChart> getProductDataChart();
+    List<ProductData> getProductDataChart();
 }

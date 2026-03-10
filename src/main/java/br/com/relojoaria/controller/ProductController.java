@@ -2,7 +2,7 @@ package br.com.relojoaria.controller;
 
 import br.com.relojoaria.dto.ProductDto;
 import br.com.relojoaria.dto.response.ProductAnalysis;
-import br.com.relojoaria.dto.response.ProductDataChart;
+import br.com.relojoaria.dto.response.ProductData;
 import br.com.relojoaria.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +65,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-data-chart")
-    public ResponseEntity<List<ProductDataChart>> getProductDataChart() {
+    public ResponseEntity<List<ProductData>> getProductDataChart() {
         return ResponseEntity.ok(productService.getProductDataChart());
     }
 }
