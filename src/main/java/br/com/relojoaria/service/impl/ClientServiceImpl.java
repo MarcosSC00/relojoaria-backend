@@ -92,8 +92,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientWithServicesResponse getClientWithServices(Long clientId) {
-         Client client = clientRepository.findClientWithServices(clientId)
+         ClientWithServicesResponse client = clientRepository.findClientWithServices(clientId)
                  .orElseThrow(() -> new NotFoundException("Cliente não encontrado."));
-        return clientAdapter.toResponse(client);
+        return client;
     }
 }
