@@ -3,7 +3,7 @@ package br.com.relojoaria.controller;
 import br.com.relojoaria.dto.ClientCustomDto;
 import br.com.relojoaria.dto.request.ClientRequest;
 import br.com.relojoaria.dto.response.ClientResponse;
-import br.com.relojoaria.dto.response.ClientWithServicesResponse;
+import br.com.relojoaria.dto.response.ClientServicesResponse;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.service.ClientService;
 import jakarta.validation.Valid;
@@ -60,8 +60,8 @@ public class ClientController {
     }
 
     @GetMapping("get-clients-with-services/{clientId}")
-    public ResponseEntity<ClientWithServicesResponse>  getClientsWithServices(
+    public ResponseEntity<List<ClientServicesResponse>>  getClientsWithServices(
             @PathVariable("clientId") Long clientId) {
-        return ResponseEntity.ok(clientService.getClientWithServices(clientId));
+        return ResponseEntity.ok(clientService.getClientServices(clientId));
     }
 }

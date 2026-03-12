@@ -5,7 +5,7 @@ import br.com.relojoaria.adapter.ServiceOrderAdapter;
 import br.com.relojoaria.dto.ClientCustomDto;
 import br.com.relojoaria.dto.request.ClientRequest;
 import br.com.relojoaria.dto.response.ClientResponse;
-import br.com.relojoaria.dto.response.ClientWithServicesResponse;
+import br.com.relojoaria.dto.response.ClientServicesResponse;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.entity.Client;
 import br.com.relojoaria.entity.ServiceOrder;
@@ -15,9 +15,7 @@ import br.com.relojoaria.service.ClientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -91,9 +89,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientWithServicesResponse getClientWithServices(Long clientId) {
-         ClientWithServicesResponse client = clientRepository.findClientWithServices(clientId)
-                 .orElseThrow(() -> new NotFoundException("Cliente não encontrado."));
-        return client;
+    public List<ClientServicesResponse> getClientServices(Long clientId) {
+        return clientRepository.findClientServices(clientId)
+                .orElseThrow(() -> new NotFoundException("Cliente não encontrado."));
     }
 }
