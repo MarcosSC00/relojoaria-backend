@@ -15,6 +15,8 @@ import br.com.relojoaria.service.ClientService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -90,7 +92,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientServicesResponse> getClientServices(Long clientId) {
-        return clientRepository.findClientServices(clientId)
-                .orElseThrow(() -> new NotFoundException("Cliente não encontrado."));
+        List<ClientServicesResponse> result =  clientRepository.findClientServices(clientId);
+        if(result.isEmpty()){
+            return new ArrayList<>();
+        }
+        return result;
     }
 }

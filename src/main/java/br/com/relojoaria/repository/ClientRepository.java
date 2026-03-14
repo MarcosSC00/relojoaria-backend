@@ -55,5 +55,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             on so.client_id=c.id
             where c.id=:clientId
            """, nativeQuery = true)
-    Optional<List<ClientServicesResponse>> findClientServices(@Param("clientId") Long clientId);
+    List<ClientServicesResponse> findClientServices(@Param("clientId") Long clientId);
 }
