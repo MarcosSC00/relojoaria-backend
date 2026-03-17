@@ -31,8 +31,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<ClientCustomDto> getAll() {
         List<ClientCustomDto> clients = clientRepository.findAllOrderedById();
-        if (clients == null) {
-            throw new NotFoundException("Nenhum cliente encontrado");
+        if (clients == null || clients.isEmpty()) {
+            return new ArrayList<>();
         }
         return clients;
     }

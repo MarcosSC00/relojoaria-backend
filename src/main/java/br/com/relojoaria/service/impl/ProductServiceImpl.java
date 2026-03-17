@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> getAll() {
         List<Product> products = productRepository.findAll();
         if(products.isEmpty()) {
-            throw new NotFoundException("Nenhum produto cadastrado");
+            return new ArrayList<>();
         }
         return products.stream()
                 .map(productAdapter::toDto).toList();
