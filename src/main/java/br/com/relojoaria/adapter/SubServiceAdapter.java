@@ -13,8 +13,15 @@ import java.util.Objects;
 @Mapper(componentModel = "spring")
 public abstract class SubServiceAdapter {
 
-    public  SubServiceResponse toResponse(SubService subServiceOrder) {
-        return null;
+    public  SubServiceResponse toResponse(SubService subService) {
+        if (subService == null) return null;
+
+        SubServiceResponse response = new SubServiceResponse();
+        response.setTitle(subService.getTitle());
+        response.setDescription(subService.getDescription());
+        response.setPrice(subService.getPrice());
+
+        return response;
     }
 
     public SubService toEntity(SubServiceRequest sub, ServiceOrder serviceOrder) {

@@ -163,11 +163,11 @@ public class ServiceOrderImpl implements ServiceOrderService {
 
     @Override
     public List<SubServiceResponse> getSubServiceOrders(Long serviceOrderId) {
-        List<SubService> subServices = serviceOrderRepository.getSubServiceOrders(serviceOrderId);
-        if (subServices.isEmpty()) {
-            throw new NotFoundException("Nenhum sub-serviço encontrado");
+        List<SubServiceResponse> subServices = serviceOrderRepository.getSubServiceOrders(serviceOrderId);
+        if (subServices == null || subServices.isEmpty()) {
+            return new ArrayList<>();
         }
-        return  subServices.stream().map(subServiceAdapter::toResponse).toList();
+        return subServices;
     }
 
     @Override

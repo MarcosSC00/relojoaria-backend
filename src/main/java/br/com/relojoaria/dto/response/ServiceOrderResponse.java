@@ -2,12 +2,14 @@ package br.com.relojoaria.dto.response;
 
 import br.com.relojoaria.enums.ServiceStatus;
 import br.com.relojoaria.enums.ServiceType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class ServiceOrderResponse {
     private Long id;
     private Long clientId;
