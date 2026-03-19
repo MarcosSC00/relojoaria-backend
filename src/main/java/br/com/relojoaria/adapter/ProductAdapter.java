@@ -1,18 +1,29 @@
 package br.com.relojoaria.adapter;
 
-import br.com.relojoaria.dto.ProductDto;
+import br.com.relojoaria.dto.request.ProductRequestDto;
+import br.com.relojoaria.dto.response.ProductResponseDto;
 import br.com.relojoaria.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.math.BigDecimal;
+
 @Mapper(componentModel = "spring")
 public interface ProductAdapter {
 
-    @Mapping(target = "name", source = "name")
-    @Mapping(target = "unit", source = "unit")
-    @Mapping(target = "price", source = "price")
-    @Mapping(target = "id", source = "id")
-    ProductDto toDto(Product product);
+    ProductResponseDto toDto(Product product);
 
-    Product toEntity(ProductDto productDto);
+    @Mapping(target = "price", source = "price")
+    Product toEntity(ProductRequestDto productRequestDto);
+
+    default BigDecimal map(String value) {
+        if (value == null || value.isBlank()) return null;
+
+        try {
+            value = value.replace(".", "").replace(",", ".");
+            return new BigDecimal(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Preço inválido: " + value);
+        }
+    }
 }

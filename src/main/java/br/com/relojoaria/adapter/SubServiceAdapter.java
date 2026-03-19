@@ -31,7 +31,7 @@ public abstract class SubServiceAdapter {
         SubService subService = new SubService();
         subService.setTitle(sub.getTitle());
         subService.setDescription(sub.getDescription());
-        subService.setPrice(sub.getPrice() != null ? sub.getPrice() : BigDecimal.ZERO);
+        subService.setPrice(sub.getPrice() != null ? parsePrice(sub.getPrice()) : BigDecimal.ZERO);
 
         subService.setServiceOrder(serviceOrder);
 
@@ -43,5 +43,17 @@ public abstract class SubServiceAdapter {
                 .map(s -> toEntity(s,serviceOrder))
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    public BigDecimal parsePrice(String value) {
+        if (value == null || value.isBlank()) return null;
+
+        // remove separador de milhar
+        value = value.replace(".", "");
+
+        // troca vírgula por ponto
+        value = value.replace(",", ".");
+
+        return new BigDecimal(value);
     }
 }

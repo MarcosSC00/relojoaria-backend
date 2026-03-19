@@ -37,7 +37,7 @@ public class SubServiceImpl implements SubServiceService {
                 .serviceOrder(serviceOrder)
                 .title(request.getTitle())
                 .description(request.getDescription())
-                .price(request.getPrice())
+                .price(parsePrice(request.getPrice()))
                 .build();
 
         return priceCalculator(request, serviceOrder, subService);
@@ -86,5 +86,17 @@ public class SubServiceImpl implements SubServiceService {
     private void updateStockQuantity(Stock stock, BigDecimal quantityUsed) {
         stock.setCurrentQuantity(stock.getCurrentQuantity().subtract(quantityUsed));
         stockRepository.save(stock);
+    }
+
+    public BigDecimal parsePrice(String value) {
+        if (value == null || value.isBlank()) return null;
+
+        // remove separador de milhar
+        value = value.replace(".", "");
+
+        // troca vírgula por ponto
+        value = value.replace(",", ".");
+
+        return new BigDecimal(value);
     }
 }

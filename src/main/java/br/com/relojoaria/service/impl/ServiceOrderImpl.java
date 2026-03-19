@@ -69,7 +69,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
                 .description(request.getDescription())
                 .status(request.getStatus())
                 .type(request.getType())
-                .addValue(request.getAddValue() != null ? request.getAddValue() : BigDecimal.ZERO)
+                .addValue(request.getAddValue() != null ? parsePrice(request.getAddValue()) : BigDecimal.ZERO)
                 .items(new ArrayList<>())
                 .endDate(request.getEndDate())
                 .totalPrice(BigDecimal.ZERO)
@@ -83,7 +83,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
                         .serviceOrder(serviceOrder)
                         .title(subRequest.getTitle())
                         .description(subRequest.getDescription())
-                        .price(subRequest.getPrice())
+                        .price(parsePrice(subRequest.getPrice()))
                         .build();
 
                 serviceOrder.getSubServices().add(subService);
@@ -117,7 +117,7 @@ public class ServiceOrderImpl implements ServiceOrderService {
         serviceOrder.setType(dto.getType() != null ? dto.getType() : serviceOrder.getType());
         serviceOrder.setStatus(dto.getStatus() != null ? dto.getStatus() : serviceOrder.getStatus());
         serviceOrder.setEndDate(dto.getEndDate() != null ? dto.getEndDate() : serviceOrder.getEndDate());
-        serviceOrder.setAddValue(dto.getAddValue() != null ? dto.getAddValue() : serviceOrder.getAddValue());
+        serviceOrder.setAddValue(dto.getAddValue() != null ? parsePrice(dto.getAddValue()) : serviceOrder.getAddValue());
         if (dto.getItems() != null) {
             serviceOrder.getItems().clear();
             List<MaterialUsage> items =
@@ -249,5 +249,17 @@ public class ServiceOrderImpl implements ServiceOrderService {
 
         BigDecimal addValue = serviceOrder.getAddValue() != null ? serviceOrder.getAddValue() : BigDecimal.ZERO;
         serviceOrder.setTotalPrice(materialsPrice.add(addValue));
+    }
+
+    public BigDecimal parsePrice(String value) {
+        if (value == null || value.isBlank()) return null;
+
+        // remove separador de milhar
+        value = value.replace(".", "");
+
+        // troca vírgula por ponto
+        value = value.replace(",", ".");
+
+        return new BigDecimal(value);
     }
 }

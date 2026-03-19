@@ -14,8 +14,6 @@ public class SubServiceRequest {
     @Size(min = 3, max = 200, message = "invalid description")
     private String description;
 
-    @NotNull(message = "price is required")
-    @Digits(integer = 8, fraction = 2, message = "The value must have a maximum of three decimal places")
-    @DecimalMin(value = "1.00", message = "the value must be greater than 1.00")
-    private BigDecimal price;
+    @NotBlank(message = "title is required")
+    private String price;
 }

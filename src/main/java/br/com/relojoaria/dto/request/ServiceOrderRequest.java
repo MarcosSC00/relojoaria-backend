@@ -34,8 +34,7 @@ public class ServiceOrderRequest {
     @Enumerated(EnumType.STRING)
     private ServiceType type;
 
-    @Digits(integer = 8, fraction = 2, message = "The value must have a maximum of three decimal places")
-    private BigDecimal addValue = BigDecimal.ZERO;
+    private String addValue;
 
     @NotNull(message = "End Date is required")
     private LocalDateTime endDate;
