@@ -4,6 +4,7 @@ import br.com.relojoaria.dto.request.ServiceOrderRequest;
 import br.com.relojoaria.dto.request.ServiceOrderUpdate;
 import br.com.relojoaria.dto.request.SubServiceRequest;
 import br.com.relojoaria.dto.request.UpdateStatus;
+import br.com.relojoaria.dto.response.MonthlyServiceCountDto;
 import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
@@ -82,5 +83,11 @@ public class ServiceOrderController {
     public ResponseEntity<Void> updateStatus(@PathVariable("id") Long id, @RequestBody UpdateStatus status) {
         service.updateStatus(id, status.getStatus());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/stats/monthly")
+    public List<MonthlyServiceCountDto> getMonthlyStats(
+            @RequestParam int year) {
+        return service.getMonthlyStats(year);
     }
 }

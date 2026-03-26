@@ -4,6 +4,7 @@ import br.com.relojoaria.adapter.MaterialUsageAdapter;
 import br.com.relojoaria.adapter.ServiceOrderAdapter;
 import br.com.relojoaria.adapter.SubServiceAdapter;
 import br.com.relojoaria.dto.request.*;
+import br.com.relojoaria.dto.response.MonthlyServiceCountDto;
 import br.com.relojoaria.dto.response.ServiceOrderCustom;
 import br.com.relojoaria.dto.response.ServiceOrderResponse;
 import br.com.relojoaria.dto.response.SubServiceResponse;
@@ -23,7 +24,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -185,6 +188,30 @@ public class ServiceOrderImpl implements ServiceOrderService {
                 .orElseThrow(() -> new NotFoundException("Serviço com id:"+id+" não encontrado"));
         serviceOrder.setStatus(status != null ?  status : serviceOrder.getStatus());
         serviceOrderRepository.save(serviceOrder);
+    }
+
+    @Override
+    public List<MonthlyServiceCountDto> getMonthlyStats(int year) {
+        List<Object[]> result = serviceOrderRepository.countServicesByMonth(year);
+
+        Map<Integer, BigDecimal> map = new HashMap<>();
+
+        for (Object[] row : result) {
+            int month = ((Number) row[0]).intValue();
+            BigDecimal total = (BigDecimal) row[1];
+            map.put(month, total);
+        }
+
+        List<MonthlyServiceCountDto> response = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            response.add(new MonthlyServiceCountDto(
+                    i,
+                    map.getOrDefault(i, BigDecimal.ZERO)
+            ));
+        }
+
+        return response;
     }
 
     private void processStockItems(ServiceOrder serviceOrder, List<MaterialUsageRequest> stockItems) {

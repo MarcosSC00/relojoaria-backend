@@ -33,4 +33,12 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
             	on s.id=m.service_order_id inner join product p on p.id=m.product where p.name=:productName
             	group by s.id, s.title""", nativeQuery = true)
     List<ServiceOrderCustom> getServiceOrderCustom(@Param("productName") String productName);
+
+    @Query(value = """
+    select extract(month from s.created_at), sum(s.total_price) as month from service_order s
+    where extract(year from s.created_at) = '2026'
+    group by extract(month from s.created_at)
+    order by extract(month from s.created_at);
+    """, nativeQuery = true)
+    List<Object[]> countServicesByMonth(@Param("year") int year);
 }
